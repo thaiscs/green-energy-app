@@ -1,24 +1,15 @@
 # README
 
-This README would normally document whatever steps are necessary to get the
-application up and running.
+## Quick start
 
-Things you may want to cover:
+**Database**
 
-* Ruby version
+```bash
+docker run --name greenenergy_dev -e POSTGRES_PASSWORD=postgres \
+  -p 5432:5432 -d postgres:18
+```
 
-* System dependencies
+```bash
+    bin/rails db:prepare
+```bash
 
-* Configuration
-
-* Database creation
-
-* Database initialization
-
-* How to run the test suite
-
-* Services (job queues, cache servers, search engines, etc.)
-
-* Deployment instructions
-
-* ...
