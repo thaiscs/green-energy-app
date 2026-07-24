@@ -1,0 +1,9 @@
+apartment_1:
+  building: sonnenhof
+  label: "1A"
+  resident_name: A. Beispiel
+
+apartment_2:
+  building: sonnenhof
+  label: "1B"
+  resident_name: B. Muster

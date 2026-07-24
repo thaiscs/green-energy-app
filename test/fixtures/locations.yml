@@ -1,0 +1,19 @@
+apartment_1_market:
+  unit: apartment_1
+  type: MarketLocation
+  external_id: "1234567890"
+
+apartment_1_metering:
+  unit: apartment_1
+  type: MeteringLocation
+  external_id: "DE0001234567890000000000000000001"
+
+apartment_2_market:
+  unit: apartment_2
+  type: MarketLocation
+  external_id: "1234567891"
+
+apartment_2_metering:
+  unit: apartment_2
+  type: MeteringLocation
+  external_id: "DE0001234567890000000000000000002"
