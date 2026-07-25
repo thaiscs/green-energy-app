@@ -141,7 +141,7 @@
   cursor: pointer;
 }
 
-.house-toggle:hover {
+.house header:hover {
   background: var(--color-surface-hover);
 }
 

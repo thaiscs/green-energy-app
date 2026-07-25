@@ -68,7 +68,7 @@ class SolarConsumptionReport
       Arel.sql("COUNT(*)")
     )
 
-    ["solar_consumption_report", "v1", @unit.id, count, max_updated_at.to_f]
+    [ "solar_consumption_report", "v1", @unit.id, count, max_updated_at.to_f ]
   end
 
   def measurements

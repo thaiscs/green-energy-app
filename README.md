@@ -48,12 +48,15 @@ that act_as_tenant implements under the hood.
 
 Possible solutions involve creating explicit role-aware accessors like below:
 
-`def accessible_units
-owner? ? Unit.all : Unit.where(id: unit_id)        # Unit.all already account-scoped
+```ruby
+def accessible_units
+  owner? ? Unit.all : Unit.where(id: unit_id)        # Unit.all already account-scoped
 end
+
 def accessible_buildings
-owner? ? Building.all : Building.where(id: unit&.building_id)
-end`
+  owner? ? Building.all : Building.where(id: unit&.building_id)
+end
+```
 
 **Sidekiq + Redis**
 
