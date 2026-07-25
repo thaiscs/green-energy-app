@@ -3,6 +3,7 @@ class ImportConsumptionDataDispatcherJob < ApplicationJob
 
   DEFAULT_BEGIN_DATE = "2026-06-04" # or Date.yesterday.to_s for daily runs
 
+  # SCHEDULE FOR DAILY
   def perform(begin_date = DEFAULT_BEGIN_DATE)
     enqueue(MarketLocation, begin_date)
     enqueue(MeteringLocation, begin_date)

@@ -1,8 +1,6 @@
 class ImportLocationDataJob < ApplicationJob
   queue_as :default
 
-  # Transient API failures: back off and retry. Safe because the upsert is
-  # idempotent, so a retry can't create duplicate rows.
   retry_on GatewayConnectionService::Error, wait: :polynomially_longer, attempts: 5
 
   # Location deleted between dispatch and execution -> the FK no longer exists,
