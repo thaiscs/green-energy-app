@@ -43,15 +43,37 @@ class SolarConsumptionReport
     end
   end
 
+  # Backstop only. Correctness comes from the fingerprint in the cache key, not
+  # from expiry — this just bounds how long an orphaned entry can linger.
+  CACHE_TTL = 12.hours
+
   def initialize(unit)
     @unit = unit
   end
 
   def call
-    build_result(select_one(relation), select_all(daily_relation))
+    Rails.cache.fetch(cache_key, expires_in: CACHE_TTL) do
+      build_result(select_one(relation), select_all(daily_relation))
+    end
   end
 
   private
+
+  # Keyed on a fingerprint of the unit's measurements, so the entry invalidates
+  # itself the moment the importer upserts new rows (updated_at moves) or the row
+  # count changes.
+  def cache_key
+    max_updated_at, count = measurements.pick(
+      Arel.sql("MAX(measurements.updated_at)"),
+      Arel.sql("COUNT(*)")
+    )
+
+    ["solar_consumption_report", "v1", @unit.id, count, max_updated_at.to_f]
+  end
+
+  def measurements
+    Measurement.joins(:location).where(locations: { unit_id: @unit.id })
+  end
 
   def build_result(row, daily_rows)
     timeframe = Timeframe.new(
@@ -104,20 +126,15 @@ class SolarConsumptionReport
   end
 
   def relation
-    Measurement
-      .joins(:location)
-      .where(locations: { unit_id: @unit.id })
-      .select(
-        "#{TOTAL_SOLAR_KWH} AS total_solar_kwh",
-        "MIN(measurements.starts_at) FILTER (WHERE locations.type = '#{METERING}') AS starts_at",
-        "MAX(measurements.starts_at) FILTER (WHERE locations.type = '#{METERING}') AS ends_at"
-      )
+    measurements.select(
+      "#{TOTAL_SOLAR_KWH} AS total_solar_kwh",
+      "MIN(measurements.starts_at) FILTER (WHERE locations.type = '#{METERING}') AS starts_at",
+      "MAX(measurements.starts_at) FILTER (WHERE locations.type = '#{METERING}') AS ends_at"
+    )
   end
 
   def daily_relation
-    Measurement
-      .joins(:location)
-      .where(locations: { unit_id: @unit.id })
+    measurements
       .group(Arel.sql(local_day))
       .select("#{local_day} AS day", "#{TOTAL_SOLAR_KWH} AS solar_kwh")
   end
