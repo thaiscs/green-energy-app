@@ -1,16 +1,5 @@
 <% content_for :title, "#{@unit.resident_name} — Solar Consumption" %>
 
-<% content_for :head do %>
-  <%# The daily panel renders collapsed to avoid a flash of expanded content on
-      load. Without JS there's nothing to expand it, so reveal it here. %>
-  <noscript>
-    <style>
-      .daily-wrapper[hidden] { display: block !important; }
-      .breakdown-toggle .chevron { visibility: hidden; }
-    </style>
-  </noscript>
-<% end %>
-
 <main class="page">
   <p class="back"><%= link_to "← All houses", root_path %></p>
 
