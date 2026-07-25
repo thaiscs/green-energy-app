@@ -17,3 +17,103 @@ apartment_2_metering:
   unit: apartment_2
   type: MeteringLocation
   external_id: "DE0001234567890000000000000000002"
+
+apartment_3_market:
+  unit: apartment_3
+  type: MarketLocation
+  external_id: "1234567892"
+
+apartment_3_metering:
+  unit: apartment_3
+  type: MeteringLocation
+  external_id: "DE0001234567890000000000000000003"
+
+apartment_4_market:
+  unit: apartment_4
+  type: MarketLocation
+  external_id: "1234567893"
+
+apartment_4_metering:
+  unit: apartment_4
+  type: MeteringLocation
+  external_id: "DE0001234567890000000000000000004"
+
+apartment_5_market:
+  unit: apartment_5
+  type: MarketLocation
+  external_id: "1234567894"
+
+apartment_5_metering:
+  unit: apartment_5
+  type: MeteringLocation
+  external_id: "DE0001234567890000000000000000005"
+
+apartment_6_market:
+  unit: apartment_6
+  type: MarketLocation
+  external_id: "1234567895"
+
+apartment_6_metering:
+  unit: apartment_6
+  type: MeteringLocation
+  external_id: "DE0001234567890000000000000000006"
+
+apartment_7_market:
+  unit: apartment_7
+  type: MarketLocation
+  external_id: "1234567896"
+
+apartment_7_metering:
+  unit: apartment_7
+  type: MeteringLocation
+  external_id: "DE0001234567890000000000000000007"
+
+apartment_8_market:
+  unit: apartment_8
+  type: MarketLocation
+  external_id: "1234567897"
+
+apartment_8_metering:
+  unit: apartment_8
+  type: MeteringLocation
+  external_id: "DE0001234567890000000000000000008"
+
+apartment_9_market:
+  unit: apartment_9
+  type: MarketLocation
+  external_id: "1234567898"
+
+apartment_9_metering:
+  unit: apartment_9
+  type: MeteringLocation
+  external_id: "DE0001234567890000000000000000009"
+
+apartment_10_market:
+  unit: apartment_10
+  type: MarketLocation
+  external_id: "1234567899"
+
+apartment_10_metering:
+  unit: apartment_10
+  type: MeteringLocation
+  external_id: "DE0001234567890000000000000000010"
+
+<%
+# A MarketLocation (10-digit id) and MeteringLocation (33-char id) per new unit.
+# Ids are drawn from a distinct 3-billion range so they never collide with the
+# hand-written ones above.
+(2..6).each do |b|
+  (1..10).each do |n|
+    seq = 3_000_000_000 + (b - 2) * 10 + n
+%>
+b<%= b %>_apartment_<%= n %>_market:
+  unit: b<%= b %>_apartment_<%= n %>
+  type: MarketLocation
+  external_id: "<%= format("%010d", seq) %>"
+
+b<%= b %>_apartment_<%= n %>_metering:
+  unit: b<%= b %>_apartment_<%= n %>
+  type: MeteringLocation
+  external_id: "DE<%= format("%031d", seq) %>"
+<% end %>
+<% end %>

@@ -1,0 +1,64 @@
+<% content_for :title, "#{@unit.resident_name} — Solar Consumption" %>
+
+<% content_for :head do %>
+  <%# The daily panel renders collapsed to avoid a flash of expanded content on
+      load. Without JS there's nothing to expand it, so reveal it here. %>
+  <noscript>
+    <style>
+      .daily-wrapper[hidden] { display: block !important; }
+      .breakdown-toggle .chevron { visibility: hidden; }
+    </style>
+  </noscript>
+<% end %>
+
+<main class="page">
+  <p class="back"><%= link_to "← All houses", root_path %></p>
+
+  <h1><%= @unit.resident_name.presence || "Unit ##{@unit.id}" %></h1>
+  <p class="meta text-muted">
+    <%= @unit.building.address %><% if @unit.label.present? %> · <%= @unit.label %><% end %>
+  </p>
+
+  <% if @report.timeframe.present? %>
+    <div class="stats">
+      <div class="stat card">
+        <span class="label text-muted">Total solar consumption</span>
+        <span class="value u-tabular"><%= number_with_precision(@report.total_solar_kwh, precision: 2) %> <span class="unit text-muted">kWh</span></span>
+      </div>
+      <div class="stat card">
+        <span class="label text-muted">Average per day</span>
+        <span class="value u-tabular"><%= number_with_precision(@report.average_daily_kwh, precision: 2) %> <span class="unit text-muted">kWh</span></span>
+      </div>
+    </div>
+
+    <p class="timeframe text-muted">Over <%= format_timeframe(@report.timeframe) %></p>
+
+    <% days = (@report.timeframe.starts_at.to_date..@report.timeframe.ends_at.to_date) %>
+    <section class="breakdown card" data-controller="collapse">
+      <h2 class="breakdown-name">
+        <button type="button" class="breakdown-toggle"
+                data-action="collapse#toggle"
+                aria-expanded="false" aria-controls="daily-<%= @unit.id %>">
+          <span class="chevron" data-collapse-target="icon" aria-hidden="true">▸</span>
+          Daily breakdown
+          <span class="day-count text-muted"><%= pluralize(days.count, "day", locale: :en) %></span>
+        </button>
+      </h2>
+
+      <div id="daily-<%= @unit.id %>" class="daily-wrapper" data-collapse-target="panel" hidden>
+        <table class="daily">
+          <tbody>
+            <% days.each do |day| %>
+              <tr>
+                <th scope="row" class="text-muted"><%= l(day, format: :short) %></th>
+                <td class="value u-tabular"><%= number_with_precision(@report.daily_solar(day), precision: 2) %> <span class="unit text-muted">kWh</span></td>
+              </tr>
+            <% end %>
+          </tbody>
+        </table>
+      </div>
+    </section>
+  <% else %>
+    <p class="empty text-muted">No measurements imported for this consumer yet.</p>
+  <% end %>
+</main>

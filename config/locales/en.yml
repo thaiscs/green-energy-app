@@ -29,3 +29,18 @@
 
 en:
   hello: "Hello world"
+  number:
+    format:
+      delimiter: ","
+      separator: "."
+      precision: 2
+      strip_insignificant_zeros: false
+  date:
+    formats:
+      long: "%B %-d, %Y"
+      short: "%b %-d"
+  datetime:
+    distance_in_words:
+      x_days:
+        one: "1 day"
+        other: "%{count} days"

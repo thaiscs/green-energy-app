@@ -1,13 +1,13 @@
 # Read about fixtures at https://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
 
-one:
-  location: one
-  starts_at: 2026-07-24 20:37:52
-  ends_at: 2026-07-24 20:37:52
+apartment_1_metering_day_1:
+  location: apartment_1_metering
+  starts_at: 2026-07-24 00:00:00
+  ends_at: 2026-07-24 00:15:00
   value_kwh: 9.99
 
-two:
-  location: two
-  starts_at: 2026-07-24 20:37:52
-  ends_at: 2026-07-24 20:37:52
-  value_kwh: 9.99
+apartment_1_market_day_1:
+  location: apartment_1_market
+  starts_at: 2026-07-24 00:00:00
+  ends_at: 2026-07-24 00:15:00
+  value_kwh: 4.00

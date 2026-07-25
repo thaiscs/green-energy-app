@@ -21,17 +21,14 @@ docker run --name greenenergy_dev -e POSTGRES_PASSWORD=postgres \
 
 ```bash
     bin/rails db:prepare
-```bash
+```
 
 **Import Data**
 
 ```bash
     bin/rails runner 'ImportConsumptionDataDispatcherJob.perform_now'
-```bash
+```
 
 ```bash
-    tail -n 40 log/development.log
-```bash
-
-
-
+    tail -f log/development.log
+```

@@ -7,3 +7,59 @@ apartment_2:
   building: sonnenhof
   label: "1B"
   resident_name: B. Muster
+
+apartment_3:
+  building: sonnenhof
+  label: "2A"
+  resident_name: C. Schmidt
+
+apartment_4:
+  building: sonnenhof
+  label: "2B"
+  resident_name: D. Fischer
+
+apartment_5:
+  building: sonnenhof
+  label: "3A"
+  resident_name: E. Weber
+
+apartment_6:
+  building: sonnenhof
+  label: "3B"
+  resident_name: F. Meyer
+
+apartment_7:
+  building: sonnenhof
+  label: "4A"
+  resident_name: G. Wagner
+
+apartment_8:
+  building: sonnenhof
+  label: "4B"
+  resident_name: H. Becker
+
+apartment_9:
+  building: sonnenhof
+  label: "5A"
+  resident_name: I. Schulz
+
+apartment_10:
+  building: sonnenhof
+  label: "5B"
+  resident_name: J. Hoffmann
+
+<%
+# 10 apartments for each of the 5 additional buildings (building_2 .. building_6).
+surnames = %w[Schmidt Fischer Weber Meyer Wagner Becker Schulz Hoffmann Koch Richter
+              Klein Wolf Neumann Braun Krüger Werner Schwarz Zimmermann Lang Krause]
+(2..6).each do |b|
+  (1..10).each do |n|
+    initial = ("A".ord + ((b * 10 + n) % 26)).chr
+    surname = surnames[(b * 10 + n) % surnames.length]
+%>
+b<%= b %>_apartment_<%= n %>:
+  building: building_<%= b %>
+  label: "<%= (n + 1) / 2 %><%= n.odd? ? "A" : "B" %>"
+  resident_name: <%= initial %>. <%= surname %>
+<% end %>
+<% end %>

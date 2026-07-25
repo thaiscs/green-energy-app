@@ -1,0 +1,52 @@
+<% content_for :title, "Buildings" %>
+
+<% content_for :head do %>
+  <noscript>
+    <style>
+      .units-wrapper[hidden] { display: block !important; }
+      .house-toggle .chevron { visibility: hidden; }
+    </style>
+  </noscript>
+<% end %>
+
+<main class="page">
+  <h1>Buildings</h1>
+
+  <% if @buildings.empty? %>
+    <p class="empty text-muted">No buildings yet.</p>
+  <% end %>
+
+  <% @buildings.each do |building| %>
+    <section class="house card" data-controller="collapse">
+      <header>
+        <h2 class="house-name">
+          <button type="button" class="house-toggle"
+                  data-action="collapse#toggle"
+                  aria-expanded="false" aria-controls="units-<%= building.id %>">
+            <span class="chevron" data-collapse-target="icon" aria-hidden="true">▸</span>
+            <span class="building-address"><%= building.address.presence || "Building ##{building.id}" %></span>
+            <span class="unit-count text-muted"><%= pluralize(building.units.size, "unit", locale: :en) %></span>
+          </button>
+        </h2>
+        <p class="meta text-muted"><%= [ building.city, building.owner ].compact_blank.join(" · ") %></p>
+      </header>
+
+      <div id="units-<%= building.id %>" class="units-wrapper" data-collapse-target="panel" hidden>
+        <% if building.units.empty? %>
+          <p class="empty text-muted">No consumers.</p>
+        <% else %>
+          <ul class="units">
+            <% building.units.each do |unit| %>
+              <li>
+                <%= link_to unit_path(unit) do %>
+                  <span class="unit-name"><%= unit.resident_name.presence || "Unit ##{unit.id}" %></span>
+                  <% if unit.label.present? %><span class="unit-label text-muted"><%= unit.label %></span><% end %>
+                <% end %>
+              </li>
+            <% end %>
+          </ul>
+        <% end %>
+      </div>
+    </section>
+  <% end %>
+</main>

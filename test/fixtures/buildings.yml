@@ -2,3 +2,21 @@ sonnenhof:
   address: Beispielstraße 12
   city: Berlin
   owner: Sonnenhof GbR
+
+<%
+# 5 additional buildings. Kept as fixtures (deterministic, label-hashed ids) so
+# re-seeding is idempotent and never orphans imported measurements.
+[
+  ["Elbchaussee 44", "Hamburg",   "Elbwind eG"],
+  ["Isarweg 7",      "München",   "Alpenstrom GmbH"],
+  ["Rheinaue 21",    "Köln",      "Domlicht GbR"],
+  ["Maininsel 5",    "Frankfurt", "Skyline Energie eG"],
+  ["Sachsenring 88", "Leipzig",   "Neustadt Solar GbR"]
+].each_with_index do |(address, city, owner), i|
+  b = i + 2
+%>
+building_<%= b %>:
+  address: <%= address %>
+  city: <%= city %>
+  owner: <%= owner %>
+<% end %>

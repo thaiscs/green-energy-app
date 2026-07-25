@@ -1,0 +1,25 @@
+de:
+  number:
+    format:
+      delimiter: "."
+      separator: ","
+      precision: 2
+      strip_insignificant_zeros: false
+  date:
+    formats:
+      default: "%d.%m.%Y"
+      long: "%-d. %B %Y"
+      short: "%-d. %b"
+    month_names:
+      [~, Januar, Februar, März, April, Mai, Juni, Juli, August, September,
+       Oktober, November, Dezember]
+    abbr_month_names:
+      [~, Jan, Feb, Mär, Apr, Mai, Jun, Jul, Aug, Sep, Okt, Nov, Dez]
+    day_names:
+      [Sonntag, Montag, Dienstag, Mittwoch, Donnerstag, Freitag, Samstag]
+    abbr_day_names: [So, Mo, Di, Mi, Do, Fr, Sa]
+  datetime:
+    distance_in_words:
+      x_days:
+        one: "1 Tag"
+        other: "%{count} Tage"
