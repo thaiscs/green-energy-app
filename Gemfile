@@ -18,7 +18,7 @@ gem "stimulus-rails"
 gem "jbuilder"
 
 # HTTP client for the external measurement API [https://github.com/lostisland/faraday]
-gem "faraday", "~> 2.0"
+gem "faraday", "~> 2.14"
 
 # Use Active Model has_secure_password [https://guides.rubyonrails.org/active_model_basics.html#securepassword]
 # gem "bcrypt", "~> 3.1.7"
